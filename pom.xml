@@ -65,6 +65,7 @@
     <module>zookeeper-recipes</module>
     <module>zookeeper-assembly</module>
     <module>zookeeper-compatibility-tests</module>
+    <module>tests</module>
   </modules>
 
   <scm>
@@ -536,6 +537,92 @@
         </pluginManagement>
       </build>
     </profile>
+    <profile>
+      <id>jacoco-coverage</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+
+      <properties>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <redirectTestOutputToFile>true</redirectTestOutputToFile>
+        <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <test.additional.args/>
+        <!--
+       Surefire plugin argLine can be defined as a Maven property to avoid JVM errors on startup with no jacaco-maven-plugin
+       https://www.eclemma.org/jacoco/trunk/doc/prepare-agent-mojo.html
+       -->
+        <argLine>-Xms512m -Xmx1024m -Xss256k</argLine>
+      </properties>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.8.1</version>
+            </plugin>
+            <plugin>
+              <groupId>org.sonarsource.scanner.maven</groupId>
+              <artifactId>sonar-maven-plugin</artifactId>
+              <version>3.9.1</version>
+            </plugin>
+            <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.8.5</version>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <version>3.1.0</version>
+              <configuration>
+                <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                <encoding>utf-8</encoding>
+                <runOrder>alphabetical</runOrder>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>3.1.0</version>
+            <configuration>
+              <redirectTestOutputToFile>true</redirectTestOutputToFile>
+              <encoding>utf-8</encoding>
+              <runOrder>alphabetical</runOrder>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
   <properties>
@@ -583,6 +670,23 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>29.0-jre</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.8.2</version>
+        <scope>test</scope>
+      </dependency>
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-library</artifactId>
@@ -669,11 +773,6 @@
         <groupId>org.jmockit</groupId>
         <artifactId>jmockit</artifactId>
         <version>${jmockit.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>${junit.version}</version>
       </dependency>
       <dependency>
         <groupId>org.junit.jupiter</groupId>
