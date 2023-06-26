@@ -440,6 +440,7 @@
     <profile>
       <id>jdk-release-flag</id>
       <activation>
+        <activeByDefault>false</activeByDefault>
         <jdk>[9,)</jdk>
       </activation>
       <properties>
