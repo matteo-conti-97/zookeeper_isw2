@@ -506,40 +506,6 @@
         </plugins>
       </build>
     </profile>
-    <profile>
-      <id>sonar</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <sonar.php.coverage.reportPaths>${project.build.directory}/clover/clover.xml</sonar.php.coverage.reportPaths>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.sonarsource.scanner.maven</groupId>
-            <artifactId>sonar-maven-plugin</artifactId>
-          </plugin>
-        </plugins>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.sonarsource.scanner.maven</groupId>
-              <artifactId>sonar-maven-plugin</artifactId>
-              <version>${sonar-maven-plugin.version}</version>
-              <configuration>
-                <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-                <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
-                <sonar.clover.reportPath>${project.build.directory}/clover/clover.xml</sonar.clover.reportPath>
-                <sonar.surefire.reportsPath>target/surefire-reports</sonar.surefire.reportsPath>
-                <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
-                <sonar.clover.version>${clover-maven-plugin.version}</sonar.clover.version>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
 
     <profile>
       <id>badua-coverage</id>
@@ -688,7 +654,6 @@
     <commons-io.version>2.11.0</commons-io.version>
     <burningwave.mockdns.version>0.25.4</burningwave.mockdns.version>
     <clover-maven-plugin.version>4.4.1</clover-maven-plugin.version>
-    <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
 
     <!-- parameters to pass to C client build -->
     <c-client-openssl>yes</c-client-openssl>
