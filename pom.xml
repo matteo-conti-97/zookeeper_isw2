@@ -665,7 +665,6 @@
        -->
         <argLine>-Xms512m -Xmx1024m -Xss256k</argLine>
       </properties>
-
       <build>
         <pluginManagement>
           <plugins>
