@@ -508,6 +508,9 @@
     </profile>
     <profile>
       <id>sonar</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
       <properties>
         <sonar.php.coverage.reportPaths>${project.build.directory}/clover/clover.xml</sonar.php.coverage.reportPaths>
       </properties>
