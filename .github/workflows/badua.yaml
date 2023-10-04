@@ -35,9 +35,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn clean verify -P badua-coverage
-      - name: Upload report
+      - name: Upload report zookeeper-jute
         uses: actions/upload-artifact@v3
         with:
-          name: badua-report
+          name: badua-report-zookeeper-jute
           path: zookeeper-jute/target/badua.xml
+          if-no-files-found: error
+      - name: Upload report zookeeper-server
+        uses: actions/upload-artifact@v3
+        with:
+          name: badua-report-zookeeper-server
+          path: zookeeper-server/target/badua.xml
           if-no-files-found: error
