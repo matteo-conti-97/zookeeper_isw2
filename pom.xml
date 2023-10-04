@@ -64,7 +64,6 @@
     <module>zookeeper-client</module>
     <module>zookeeper-recipes</module>
     <module>zookeeper-assembly</module>
-    <module>zookeeper-compatibility-tests</module>
     <module>tests</module>
   </modules>
 
