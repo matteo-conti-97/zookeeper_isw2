@@ -41,9 +41,3 @@ jobs:
           name: badua-report
           path: zookeeper-jute/target/badua.xml
           if-no-files-found: error
-      - name: Upload report zookeeper-server
-        uses: actions/upload-artifact@v3
-        with:
-          name: badua-report
-          path: zookeeper-server/target/badua.xml
-          if-no-files-found: error
