@@ -747,7 +747,7 @@
     <dependency.locations.enabled>false</dependency.locations.enabled>
     <surefire.version>2.22.1</surefire.version>
 
-    <surefire-forkcount>8</surefire-forkcount>
+    <surefire-forkcount>1</surefire-forkcount>
     <redirectTestOutputToFile>true</redirectTestOutputToFile>
 
     <!-- dependency versions -->
