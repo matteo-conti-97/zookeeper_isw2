@@ -386,6 +386,8 @@ public class ZKDatabase {
 
             // If we cannot guarantee that this is strictly the starting txn
             // after a given zxid, we should fail.
+            TxnHeader txnHeader= itr.getHeader();
+            long txnHeaderId= txnHeader.getZxid();
             if ((itr.getHeader() != null) && (itr.getHeader().getZxid() > startZxid)) {
                 LOG.warn(
                     "Unable to find proposals from txnlog for zxid: 0x{}",

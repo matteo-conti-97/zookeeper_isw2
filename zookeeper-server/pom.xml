@@ -476,5 +476,37 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>pit-coverage</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <version>1.8.0</version>
+            <configuration>
+              <targetClasses>
+                <param>org.apache.zookeeper.server.ZKDatabase</param>
+              </targetClasses>
+              <targetTests>
+                <param>org.apache.zookeeper.server.ZKDatabaseTest</param>
+              </targetTests>
+            </configuration>
+            <executions>
+              <execution>
+                <id>Mutation Report</id>
+                <phase>test-compile</phase>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>
