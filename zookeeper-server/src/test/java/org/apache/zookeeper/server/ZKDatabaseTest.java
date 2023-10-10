@@ -28,17 +28,17 @@ public class ZKDatabaseTest {
     /*@Parameterized.Parameters
     public static Collection<Object[]> getTestParameters() {
         return Arrays.asList(new Object[][]{ //startZxidm, sizeLimit, expectedOutput
-                //1-startZxid -1, sizeLimit -1, expectedOutput empty iterator
+                //0-startZxid -1, sizeLimit -1, expectedOutput empty iterator
                 {-1, -1, 0},
-                //2-startZxid -1, sizeLimit 0, expectedOutput !empty iterator
+                //1-startZxid -1, sizeLimit 0, expectedOutput !empty iterator
                 {-1, 0, 1},
-                //3-startZxid -1, sizeLimit 1, expectedOutput !empty iterator
+                //2-startZxid -1, sizeLimit 1, expectedOutput !empty iterator
                 {-1, 1, 1},
-                //4-startZxid 0, sizeLimit -1, expectedOutput empty iterator
+                //3-startZxid 0, sizeLimit -1, expectedOutput empty iterator
                 {0, -1, 0},
-                //5-startZxid 0, sizeLimit 0, expectedOutput !empty iterator
+                //4-startZxid 0, sizeLimit 0, expectedOutput !empty iterator
                 {0, 0, 1},
-                //6-startZxid 0, sizeLimit -1, expectedOutput empty iterator
+                //5-startZxid 0, sizeLimit -1, expectedOutput empty iterator
                 {0, 1, 1},
         });
     }
@@ -72,7 +72,7 @@ public class ZKDatabaseTest {
     public static Collection<Object[]> getTestParameters() {
         return Arrays.asList(new Object[][]{ //snapLog, startZxidm, sizeLimit, expectedOutput
                 //0-snapLog null, startZxid 0, sizeLimit 1, expectedOutput NullPointerException
-                /*{LogStatus.NULL_LOG, 0, 1, new NullPointerException()},
+                {LogStatus.NULL_LOG, 0, 1, new NullPointerException()},
                 //1-snapLog nonExisting, startZxid 0, sizeLimit 1, expectedOutput 0 -> la IOException viene gestita
                 {LogStatus.NON_EXISTING_LOG, 0, 1, 0},
                 //2-snapLog !empty, startZxid 0, sizeLimit -1, expectedOutput empty iterator -> -1 sizeLimit
@@ -81,10 +81,12 @@ public class ZKDatabaseTest {
                 {LogStatus.EXISTING_LOG, 0, 0, 1},
                 //4-snapLog !empty, startZxid 0, sizeLimit 1, expectedOutput iterator con 1 elemento
                 {LogStatus.EXISTING_LOG, 0, 1, 1},
-                //5-snapLog !empty, startZxid 1, sizeLimit 1, expectedOutput empty iterator -> startZxid > logMaxZxid
-                */{LogStatus.EXISTING_LOG, 1, 1, 0}, //TODO CONTROLLARE RIGA 391 di ZKDatabase
-                //6-snapLog !empty, startZxid 1, sizeLimit 0, expectedOutput empty iterator -> startZxid > logMaxZxid
-                {LogStatus.EXISTING_LOG, 1, 0, 0},
+                //5-snapLog !empty, startZxid -1, sizeLimit 1, expectedOutput empty iterator -> startZxid > logMaxZxid
+                {LogStatus.EXISTING_LOG, -1, 1, 0},
+                //6-snapLog !empty, startZxid -1, sizeLimit 0, expectedOutput empty iterator -> startZxid > logMaxZxid
+                {LogStatus.EXISTING_LOG, -1, 0, 0},
+                //7-snapLog !empty, startZxid -1, sizeLimit -1, expectedOutput empty iterator -> -1 sizeLimit
+                {LogStatus.EXISTING_LOG, -1, -1, 0},
         });
     }
 
