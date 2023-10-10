@@ -87,6 +87,8 @@ public class ZKDatabaseTest {
                 {LogStatus.EXISTING_LOG, -1, 0, 0},
                 //7-snapLog !empty, startZxid -1, sizeLimit -1, expectedOutput empty iterator -> -1 sizeLimit
                 {LogStatus.EXISTING_LOG, -1, -1, 0},
+                //8-snapLog !empty, startZxid 0, sizeLimit 2, expectedOutput empty iterator
+                {LogStatus.EXISTING_LOG, 0, 2, 0},
         });
     }
 
