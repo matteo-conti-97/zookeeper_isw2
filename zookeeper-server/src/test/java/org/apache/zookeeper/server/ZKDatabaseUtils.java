@@ -6,9 +6,11 @@ public class ZKDatabaseUtils {
 
     public static final String NON_EXISTING_LOG_PATH = "non_existing_log_dir";
     public enum LogStatus{
+        EXISTING_LOG_WITH_2_ELEMENTS,
         EXISTING_LOG,
         NULL_LOG,
         NON_EXISTING_LOG,
+
     }
     public static int checkIteratorSize(Iterator iterator){
         int count = 0;
