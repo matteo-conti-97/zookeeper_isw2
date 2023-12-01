@@ -66,8 +66,8 @@ public class ZKDatabaseTest {
         assertEquals(expectedOutput, ZKDatabaseUtils.checkIteratorSize(res));
     }*/
 
-    //EVO1
-    /*@Parameterized.Parameters
+    /*//EVO1
+    @Parameterized.Parameters
     public static Collection<Object[]> getTestParameters() {
         return Arrays.asList(new Object[][]{ //snapLog, startZxidm, sizeLimit, expectedOutput
                 //0-snapLog null, startZxid 0, sizeLimit 1, expectedOutput NullPointerException
@@ -119,7 +119,6 @@ public class ZKDatabaseTest {
                     Mockito.when(snapLog.readTxnLog(ArgumentMatchers.anyLong(), ArgumentMatchers.anyBoolean())).thenReturn(txnIteratorMock);
                 }
             }
-
             ZKDatabase zkdb = new ZKDatabase(snapLog);
             res = zkdb.getProposalsFromTxnLog(startZxid, sizeLimit);
             assertEquals(expectedOutput, ZKDatabaseUtils.checkIteratorSize(res));
@@ -188,7 +187,6 @@ public class ZKDatabaseTest {
                     Mockito.when(snapLog.readTxnLog(ArgumentMatchers.anyLong(), ArgumentMatchers.anyBoolean())).thenReturn(txnIteratorMock);
                 }
             }
-
             ZKDatabase zkdb = new ZKDatabase(snapLog);
             res = zkdb.getProposalsFromTxnLog(startZxid, sizeLimit);
             assertEquals(expectedOutput, ZKDatabaseUtils.checkIteratorSize(res));
@@ -198,4 +196,5 @@ public class ZKDatabaseTest {
             e.printStackTrace();
         }
     }
+
 }

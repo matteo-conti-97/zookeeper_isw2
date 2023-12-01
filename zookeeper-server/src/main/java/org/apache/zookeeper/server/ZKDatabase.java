@@ -73,7 +73,6 @@ import org.slf4j.LoggerFactory;
 public class ZKDatabase {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZKDatabase.class);
-
     /**
      * make sure on a clear you take care of
      * all these members.
@@ -378,14 +377,10 @@ public class ZKDatabase {
             LOG.debug("Negative size limit - retrieving proposal via txnlog is disabled");
             return TxnLogProposalIterator.EMPTY_ITERATOR;
         }
-
         TxnIterator itr = null;
         try {
-
             itr = snapLog.readTxnLog(startZxid, false);
-
-            // If we cannot guarantee that this is strictly the starting txn
-            // after a given zxid, we should fail.
+            // If we cannot guarantee that this is strictly the starting txn after a given zxid, we should fail.
             TxnHeader txnHeader= itr.getHeader();
             long txnHeaderId= txnHeader.getZxid();
             if ((itr.getHeader() != null) && (itr.getHeader().getZxid() > startZxid)) {
@@ -395,7 +390,6 @@ public class ZKDatabase {
                 itr.close();
                 return TxnLogProposalIterator.EMPTY_ITERATOR;
             }
-
             if (sizeLimit > 0) {
                 long txnSize = itr.getStorageSize();
                 if (txnSize > sizeLimit) {
