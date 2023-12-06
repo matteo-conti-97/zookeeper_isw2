@@ -1,5 +1,7 @@
-package org.apache.zookeeper.server;
+package org.apache.zookeeper.server.auth;
 
+import org.apache.zookeeper.server.ServerCnxn;
+import org.apache.zookeeper.server.ServerMetrics;
 import org.apache.zookeeper.server.auth.EnsembleAuthenticationProvider;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,12 +17,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.mockito.Mockito;
-import org.apache.zookeeper.server.EnsembleAuthenticationProviderUtils.RetType;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import org.apache.zookeeper.server.auth.EnsembleAuthenticationProviderUtils.RetType;
 
 @RunWith(Parameterized.class)
 public class EnsembleAuthenticationProviderTest {
@@ -33,7 +30,7 @@ public class EnsembleAuthenticationProviderTest {
 
     @After
     public void clearEnv() {
-        System.out.println("ENSEMBLE AUT SKIP "+ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.get());
+        System.out.println("ENSEMBLE AUT SKIP "+ ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.get());
         System.out.println("ENSEMBLE AUT FAIL "+ServerMetrics.getMetrics().ENSEMBLE_AUTH_FAIL.get());
         System.out.println("ENSEMBLE AUT SUCCESS "+ServerMetrics.getMetrics().ENSEMBLE_AUTH_SUCCESS.get());
         if(ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.get()>0)

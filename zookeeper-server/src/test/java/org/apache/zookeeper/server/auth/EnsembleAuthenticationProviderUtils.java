@@ -1,4 +1,4 @@
-package org.apache.zookeeper.server;
+package org.apache.zookeeper.server.auth;
 
 public class EnsembleAuthenticationProviderUtils {
     public enum RetType {
