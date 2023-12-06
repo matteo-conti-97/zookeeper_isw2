@@ -2,7 +2,6 @@ package org.apache.zookeeper.server.auth;
 
 import org.apache.zookeeper.server.ServerCnxn;
 import org.apache.zookeeper.server.ServerMetrics;
-import org.apache.zookeeper.server.auth.EnsembleAuthenticationProvider;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
