@@ -1,5 +1,6 @@
 package org.apache.zookeeper.server.auth;
 
+import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.server.ServerCnxn;
 import org.apache.zookeeper.server.ServerMetrics;
 import org.junit.After;
@@ -91,7 +92,7 @@ public class EnsembleAuthenticationProviderTest {
             EnsembleAuthenticationProvider eap = new EnsembleAuthenticationProvider();
             ensembleNamesAttribute.set(eap, ensembleNames);
             eap.handleAuthentication(cnxn, authData);
-            if(expectedRetType== RetType.ENSEMBLE_AUTH_SKIP)
+            if(expectedRetType == RetType.ENSEMBLE_AUTH_SKIP)
                 Assert.assertEquals(expected, ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.get());
             else if(expectedRetType== RetType.ENSEMBLE_AUTH_FAIL)
                 Assert.assertEquals(expected, ServerMetrics.getMetrics().ENSEMBLE_AUTH_FAIL.get());
@@ -101,6 +102,61 @@ public class EnsembleAuthenticationProviderTest {
             e.printStackTrace();
             Assert.assertEquals(expected.getClass(), e.getClass());
         }
-
     }
+
+    //EVO2
+    /*
+    @Parameterized.Parameters
+    public static Collection<Object[]> getTestParameters() {
+        return Arrays.asList(new Object[][]{ //cnxn, authData, ensembleNames, expectedOutput
+                //0- {null}, {array contenente la codifica in byte di un solo nome di ensemble presente in ensembleNames}, {set contenente una sola stringa non vuota} -> NullPointerException
+                {null, "non-presente".getBytes(), new HashSet<String>() {{add("presente");}}, new NullPointerException(), RetType.NullPointerException},
+                //1- {istanza di serverCnxn}, {null}, {set contenente una sola stringa non vuota} -> ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.add(1) -> 1
+                {Mockito.mock(ServerCnxn.class), null, new HashSet<String>() {{add("presente");}}, 1L, RetType.ENSEMBLE_AUTH_SKIP},
+                //2- {istanza di serverCnxn}, {array contenente la codifica in byte di un solo nome di ensemble non presente in ensembleNames}, {null}  -> ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.add(1) -> 1
+                {Mockito.mock(ServerCnxn.class), "non-presente".getBytes(), null, 1L,  RetType.ENSEMBLE_AUTH_SKIP},
+                //3- {istanza di serverCnxn}, {array contenente la codifica in byte di un solo nome di ensemble non presente in ensembleNames}, {set contenente una sola stringa non vuota} -> ServerMetrics.getMetrics().ENSEMBLE_AUTH_FAIL.add(1) -> 1
+                {Mockito.mock(ServerCnxn.class), "non-presente".getBytes(), new HashSet<String>() {{add("presente");}}, 1L,  RetType.ENSEMBLE_AUTH_FAIL},
+                //4- {istanza di serverCnxn}, {array contenente la codifica in byte di un solo nome di ensemble presente in ensembleNames}, {set contenente una sola stringa vuota} -> ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.add(1) -> 1
+                {Mockito.mock(ServerCnxn.class), "".getBytes(), new HashSet<String>() {{add("");}}, 1L, RetType.ENSEMBLE_AUTH_SKIP},
+                //5- {istanza di serverCnxn}, {array contenente la codifica in byte di un solo nome di ensemble presente in ensembleNames}, {set contenente una sola stringa non vuota} -> ServerMetrics.getMetrics().ENSEMBLE_AUTH_SUCCESS.add(1) -> 1
+                {Mockito.mock(ServerCnxn.class), "presente".getBytes(), new HashSet<String>() {{add("presente");}}, 1L, RetType.ENSEMBLE_AUTH_SUCCESS},
+                //6- {istanza di serverCnxn}, {array contenente la codifica in byte di un solo nome di ensemble non presente in ensembleNames}, {set vuoto} -> ServerMetrics.getMetrics().ENSEMBLE_AUTH_FAIL.add(1) -> 1
+                {Mockito.mock(ServerCnxn.class), "non-presente".getBytes(), new HashSet<String>(), 1L, RetType.ENSEMBLE_AUTH_FAIL},
+                //7- {istanza di serverCnxn}, {array vuoto}, {set contenente una sola stringa vuota} -> ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.add(1) -> 1
+                {Mockito.mock(ServerCnxn.class), new byte[0], new HashSet<String>() {{add("");}}, 1L, RetType.ENSEMBLE_AUTH_SKIP},
+                //8- {istanza di serverCnxn}, {array vuoto}, {set contenente una sola stringa non vuota} -> ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.add(1) -> 1
+                {Mockito.mock(ServerCnxn.class), new byte[0], new HashSet<String>() {{add("presente");}}, 1L, RetType.ENSEMBLE_AUTH_SKIP},
+        });
+    }
+
+    @Test
+    public void handleAuthenticationTest() throws NoSuchFieldException, IllegalAccessException {
+        //Use reflection to set ensembleNames attribute
+        Field ensembleNamesAttribute = EnsembleAuthenticationProvider.class.getDeclaredField("ensembleNames");
+        ensembleNamesAttribute.setAccessible(true);
+        if(cnxn!=null) {
+            InetAddress ia=Mockito.mock(InetAddress.class);
+            Mockito.when(ia.getHostAddress()).thenReturn("mockedAddress");
+            //Not doing mock cause isa calls getAddress which is final and cannot be mocked easily
+            InetSocketAddress isa = new InetSocketAddress(ia, 0);
+            Mockito.when(cnxn.getRemoteSocketAddress()).thenReturn(isa);
+        }
+        try{
+            EnsembleAuthenticationProvider eap = new EnsembleAuthenticationProvider();
+            ensembleNamesAttribute.set(eap, ensembleNames);
+            KeeperException.Code ret = eap.handleAuthentication(cnxn, authData);
+            if((expectedRetType == RetType.ENSEMBLE_AUTH_SKIP)&&(ret==KeeperException.Code.OK))
+                Assert.assertEquals(expected, ServerMetrics.getMetrics().ENSEMBLE_AUTH_SKIP.get());
+            else if((expectedRetType== RetType.ENSEMBLE_AUTH_FAIL)&&(ret==KeeperException.Code.BADARGUMENTS))
+                Assert.assertEquals(expected, ServerMetrics.getMetrics().ENSEMBLE_AUTH_FAIL.get());
+            else if((expectedRetType== RetType.ENSEMBLE_AUTH_SUCCESS)&&(ret==KeeperException.Code.OK))
+                Assert.assertEquals(expected, ServerMetrics.getMetrics().ENSEMBLE_AUTH_SUCCESS.get());
+            else
+                Assert.fail();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Assert.assertEquals(expected.getClass(), e.getClass());
+        }
+    }*/
 }
