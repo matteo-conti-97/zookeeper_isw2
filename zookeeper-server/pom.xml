@@ -494,7 +494,7 @@
               </targetClasses>
               <targetTests>
                 <param>org.apache.zookeeper.server.ZKDatabaseTest</param>
-                <param>org.apache.zookeeper.server.auth.EnsembleAuthenticationProvider</param>
+                <param>org.apache.zookeeper.server.auth.EnsembleAuthenticationProviderTest</param>
               </targetTests>
             </configuration>
             <executions>
