@@ -35,3 +35,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_ZOOKEEPER }}
         run: mvn -B verify -P failsafe-it
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        with:
+         name: failsafe-report
+         path: target/failsafe-reports/
+         if-no-files-found: error
