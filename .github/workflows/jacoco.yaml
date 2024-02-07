@@ -1,4 +1,4 @@
-name: Jacoco sonarcloud
+name: Jacoco
 on:
   push:
     branches:
