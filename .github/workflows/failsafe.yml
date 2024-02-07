@@ -1,4 +1,4 @@
-name: Jacoco sonarcloud
+name: Failsafe
 on:
   push:
     branches:
