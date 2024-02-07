@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
          name: failsafe-report
-         path: target/failsafe-reports/
+         path: zookeeper-server/target/failsafe-reports/
          if-no-files-found: error
